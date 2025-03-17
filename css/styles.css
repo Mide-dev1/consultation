@@ -367,7 +367,8 @@ body {
     }
 
     .hero-image {
-        max-width: 100%;
+        width: 70px;
+        height: auto;
     }
 
     .intro h2,
