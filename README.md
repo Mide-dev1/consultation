@@ -36,4 +36,24 @@
    npm start
    ```
 
+   ## Deployment
+   1. Clone the repository
+   ```bash
+   git clone https://github.com/YOUR-USERNAME/YOUR-REPO-NAME.git
+   ```
+   2. Install backend dependencies
+   ```bash
+   cd backend
+   npm install
+   ```
+   3. Set up environment variables
+   - Copy .env.example to .env
+   - Fill in your actual credentials
+   4. Start the backend server
+   ```bash
+   npm start
+   ```
+   5. Serve the frontend
+   - Use a live server to serve the frontend directory
+
 
