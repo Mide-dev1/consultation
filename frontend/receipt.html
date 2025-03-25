@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Receipt - Spiritual Wellness</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link rel="stylesheet" href="css/receipt.css">
+</head>
+<body>
+    <div class="receipt-container">
+        <div class="receipt" id="receipt">
+            <div class="receipt-header">
+                <h1>Payment Receipt</h1>
+                <div class="receipt-logo">Spiritual Wellness</div>
+            </div>
+            <div class="receipt-details">
+                <div class="receipt-row">
+                    <span>Transaction ID:</span>
+                    <span id="transactionId"></span>
+                </div>
+                <div class="receipt-row">
+                    <span>Date:</span>
+                    <span id="date"></span>
+                </div>
+                <div class="receipt-row">
+                    <span>Customer Name:</span>
+                    <span id="customerName"></span>
+                </div>
+                <div class="receipt-row">
+                    <span>Email:</span>
+                    <span id="customerEmail"></span>
+                </div>
+                <div class="receipt-row">
+                    <span>Service:</span>
+                    <span id="service"></span>
+                </div>
+                <div class="receipt-row total">
+                    <span>Amount Paid:</span>
+                    <span id="amountPaid"></span>
+                </div>
+            </div>
+            <div class="receipt-footer">
+                <p>Thank you for your payment!</p>
+                <div class="button-container">
+                    <button id="downloadPdf" class="cta-button primary" onclick="downloadPdf()">Download PDF</button>
+                    <button id="printReceipt" class="cta-button secondary" onclick="window.print()">Print Receipt</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/receipt.js"></script>
+</body>
+</html>

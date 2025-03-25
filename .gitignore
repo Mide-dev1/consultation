@@ -1,0 +1,29 @@
+   # Dependencies
+   node_modules/
+   
+   # Environment variables
+   .env
+   
+   # Logs
+   logs
+   *.log
+   
+   # Runtime data
+   pids
+   *.pid
+   *.seed
+   
+   # Directory for instrumentation/coverage reports
+   coverage/
+   
+   # Optional npm cache directory
+   .npm
+   
+   # Optional eslint cache
+   .eslintcache
+   
+   # Mac files
+   .DS_Store
+   
+   # VS Code settings
+   .vscode/

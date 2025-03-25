@@ -1,0 +1,133 @@
+.receipt-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background-color: var(--secondary-color);
+}
+
+.receipt {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    max-width: 600px;
+    width: 100%;
+}
+
+.receipt-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--accent-color);
+}
+
+.receipt-logo {
+    color: var(--accent-color);
+    font-size: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.receipt-details {
+    margin-bottom: 2rem;
+}
+
+.receipt-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.receipt-row.total {
+    font-weight: bold;
+    font-size: 1.2rem;
+    border-top: 2px solid var(--accent-color);
+    padding-top: 1rem;
+}
+
+.receipt-footer {
+    text-align: center;
+}
+
+.receipt-footer p {
+    margin-bottom: 1.5rem;
+    color: var(--accent-color);
+}
+
+/* Button Styles */
+.cta-button {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    margin: 10px 0;
+    width: 100%;
+    max-width: 250px;
+}
+
+.cta-button.primary {
+    background-color: #e53e3e; /* Professional red color */
+    color: white;
+    box-shadow: 0 4px 6px rgba(229, 62, 62, 0.2);
+}
+
+.cta-button.secondary {
+    background-color: transparent;
+    border: 2px solid #e53e3e;
+    color: #e53e3e;
+}
+
+/* Hover states */
+.cta-button.primary:hover {
+    background-color: #c53030; /* Darker shade for hover */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(229, 62, 62, 0.3);
+}
+
+.cta-button.secondary:hover {
+    background-color: rgba(229, 62, 62, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Active states */
+.cta-button.primary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(229, 62, 62, 0.2);
+}
+
+.cta-button.secondary:active {
+    transform: translateY(0);
+}
+
+/* Disabled state */
+.cta-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Button container */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .button-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .cta-button {
+        width: 100%;
+    }
+}
