@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
 
         try {
-            const response = await fetch('http://localhost:3000/api/payment/initialize', {
+            const response = await fetch('https://consultation-phi.vercel.app/api/payment/initialize' {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
