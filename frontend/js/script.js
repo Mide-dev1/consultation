@@ -46,8 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const response = await fetch('https://consultation-phi.vercel.app/api/payment/initialize' {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(formData)
             });
