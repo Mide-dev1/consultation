@@ -12,7 +12,7 @@ app.use(cors({
         'https://spiritualconsultation.netlify.app/',
         'http://localhost:5500'],
         'https://consultation-phi.vercel.app/'    // Frontend URL
-    ]
+    ],
     credentials: true,
     methods: ['GET', 'POST', 'OPTIONS']
 }));
