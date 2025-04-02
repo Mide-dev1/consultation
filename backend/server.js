@@ -8,8 +8,12 @@ const app = express();
 
 // Configure CORS
 app.use(cors({
-    origin: ['https://spiritualconsultation.netlify.app/', 'http://localhost:5500'], // Frontend URL
-    credentials: true
+    origin: [
+        'https://spiritualconsultation.netlify.app/',
+        'http://localhost:5500'],
+        'https://consultation-phi.vercel.app/'    // Frontend URL
+    credentials: true,
+    methods: ['GET', 'POST', 'OPTIONS']
 }));
 
 // Add this before your routes
