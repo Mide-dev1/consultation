@@ -22,6 +22,22 @@ app.use('/api/payment', paymentRoutes);
 app.use(express.json());
 app.use(express.static('public'));
 
+// Basic route to test if server is running
+app.get('/', (req, res) => {
+    res.json({ message: 'Server is running' });
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ message: 'Something went wrong!' });
+});
+
+// Handle 404 routes
+app.use((req, res) => {
+    res.status(404).json({ message: 'Route not found' });
+});
+
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI)
