@@ -4,6 +4,16 @@ exports.initializePayment = async (req, res) => {
     try {
         const { email, amount, name, challenge, otherChallenge } = req.body;
 
+                // Validate input
+        if (!email || !amount || !name || !challenge || !otherChallenge) {
+            return res.status(400).json({
+                success: false,
+                message: 'Missing required fields'
+            });
+        }
+
+        console.log('Received payment request:', { email, amount, name, challenge, otherChallenge });
+
         // Convert amount to kobo (smallest currency unit)
         const amountInKobo = Math.round(amount * 100);
 
