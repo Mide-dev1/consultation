@@ -8,7 +8,7 @@ const app = express();
 
 // Configure CORS
 app.use(cors({
-    origin: ['https://spiritualconsultation.netlify.app/', 'http://localhost:5500'],    // Frontend URL
+    origin: ['https://consultation-oy4p.vercel.app/', 'http://localhost:5500'],    // Frontend URL
     credentials: true
 }));
 
