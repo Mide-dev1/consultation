@@ -32,18 +32,18 @@
         <div class="container">
             <h2>Spiritual Consultation</h2>
             <div class="consultation-form">
-                <form id="consultationForm" onsubmit="return false;">
+                <form id="consultationForm">
                     <div class="form-group">
                         <label for="challenge">Select Your Spiritual Challenge:</label>
                         <select id="challenge" name="challenge" required>
-                            <option value="" disabled>Choose a challenge...</option>
-                            <option value="anxiety">Rid off Demons</option>
-                            <option value="confusion">Paranormal, Ghosts, Jinn spirits solution</option>
-                            <option value="blockage">Emotional Healings</option>
-                            <option value="purpose">Dreams Interpretation</option>
-                            <option value="healing">Finding a purpose in life</option>
-                            <option value="healing">Nightmare Expulsion</option>
-                            <option value="healing">Freedom from witchcraft surpression</option>
+                            <option value="">Choose a challenge...</option>
+                            <option value="Rid off Demons">Rid off Demons</option>
+                            <option value="Paranormal">Paranormal, Ghosts, Jinn spirits solution</option>
+                            <option value="Emotional Healings">Emotional Healings</option>
+                            <option value="Dreams Interpretation">Dreams Interpretation</option>
+                            <option value="Finding a purpose in life">Finding a purpose in life</option>
+                            <option value="Nightmare Expulsion">Nightmare Expulsion</option>
+                            <option value="Freedom from witchcraft">Freedom from witchcraft surpression</option>
                             <option value="other">Other</option>
                         </select>
                     </div>
@@ -51,7 +51,7 @@
                     <!-- Add this new div after the select -->
                     <div class="form-group" id="otherChallengeGroup" style="display: none;">
                         <label for="otherChallenge">Please specify your challenge:</label>
-                        <textarea id="otherChallenge" name="otherChallenge" rows="3" placeholder="Describe your spiritual challenge..."></textarea>
+                        <input type="text" id="otherChallenge" name="otherChallenge" rows="3" placeholder="Describe your spiritual challenge..."></input>
                     </div>
                     
                     <div class="form-group">
@@ -62,7 +62,7 @@
                         <label for="email">Email:</label>
                         <input type="email" id="email" name="email" required>
                     </div>
-                    <button type="submit" id="submitButton" class="cta-button" onclick="handleSubmit(event)">Proceed to Payment</button>
+                    <button type="submit" id="submitButton" class="cta-button">Proceed to Payment</button>
                 </form>
             </div>
         </div>
