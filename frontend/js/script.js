@@ -55,6 +55,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
             console.log('Sending payment data:', formData); // Debug log
 
+            
+                // First, check if the server is accessible
+                const checkResponse = await fetch('https://consultation-phi.vercel.app/api/payment/initialize', {
+                    method: 'OPTIONS',
+                    headers: {
+                        'Origin': 'https://consultation-oy4p.vercel.app'
+                    }
+                });
+            
+                if (!checkResponse.ok) {
+                    throw new Error('Server is not accessible');
+                }
+
             const response = await fetch('https://consultation-phi.vercel.app/api/payment/initialize', {
                 method: 'POST',
                 headers: {
@@ -62,13 +75,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     'Accept': 'application/json',
                     'Origin': 'https://consultation-oy4p.vercel.app'
                 },
-                credentials: 'include',
-                mode: 'cors',
                 body: JSON.stringify(formData)
             });
 
             console.log('Response status:', response.status); // Debug log
 
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Payment initialization failed');
+            }
+            
             const responseData = await response.json();
             console.log('Response data:', responseData); // Debug log
 
