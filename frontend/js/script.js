@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const challengeSelect = document.getElementById('challenge');
     const otherChallengeGroup = document.getElementById('otherChallengeGroup');
     const otherChallengeInput = document.getElementById('otherChallenge');
-    const submitButton = form.querySelector('submitButton');
+    const submitButton = document.getElementById('submitButton');
 
     // Show/hide other challenge text box based on selection
     challengeSelect.addEventListener('change', function() {
