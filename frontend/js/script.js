@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     amount: formData.amount
                 }));
                 // Redirect to Paystack
-                window.location.href = data.authorization_url;
+                window.location.href = responseData.authorization_url;
             } else {
                 throw new Error(data.message || 'Payment initialization failed');
             }
