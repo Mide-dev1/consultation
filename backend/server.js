@@ -37,7 +37,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Routes
-app.use('/api/payment', paymentRoutes);
+app.use('/api/payment', require('./routes/paymentRoutes'));
 
 // Basic route to test if server is running
 app.get('/', (req, res) => {
