@@ -28,17 +28,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
         try {
             // Get form values
-            const email = document.getElementById('email').value;
-            const name = document.getElementById('name').value;
-            const selectedChallenge = challengeSelect.value;
+            const email = document.getElementById('email').value.trim();
+            const name = document.getElementById('name').value.trim();
+            const selectedChallenge = challengeSelect.value.trim();
             const challengeText = selectedChallenge === 'other' && otherChallengeInput 
-                ? otherChallengeInput.value 
+                ? otherChallengeInput.value.trim() 
                 : selectedChallenge;
 
             // Validate form data
             if (!email || !name || !challengeText) {
                 throw new Error('Please fill in all required fields');
             }
+
+             // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            throw new Error('Please enter a valid email address');
+        }
 
             const formData = {
                 email: email,
@@ -64,6 +70,13 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Response data:', responseData); // Debug log
 
             if (!response.ok) {
+                   // Check for validation errors
+            if (responseData.details) {
+                const errorMessages = Object.values(responseData.details)
+                    .filter(msg => msg !== null)
+                    .join('\n');
+                throw new Error(errorMessages || responseData.message);
+            }
                 throw new Error(responseData.message || 'Payment initialization failed');
             }
 
