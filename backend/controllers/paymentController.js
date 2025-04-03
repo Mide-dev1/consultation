@@ -3,8 +3,7 @@ const https = require('https');
 exports.initializePayment = async (req, res) => {
     try {
         // Log the entire request body
-        console.log('Raw request body:', req.body);
-        console.log('Content-Type:', req.headers['content-type']);
+        console.log('Payment initialization request received');
 
         // Validate required fields
         const { email, amount, name, challenge } = req.body;
