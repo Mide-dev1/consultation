@@ -17,6 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    const BACKEND_URL = 'https://consultation-phi.vercel.app/'
+
     // Handle form submission
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
@@ -40,13 +42,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 service: challengeText // Include in metadata for Paystack display
             }
         };
-        
+
+          console.log('Sending data:', formData); // Debug log
 
         try {
             const response = await fetch('https://consultation-phi.vercel.app/api/payment/initialize' {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 },
                 body: JSON.stringify(formData)
             });
