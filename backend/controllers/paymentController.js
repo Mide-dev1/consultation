@@ -2,6 +2,7 @@ const https = require('https');
 
 exports.initializePayment = async (req, res) => {
     try {
+         console.log('Payment initialization request received:', req.body);
         const { email, amount, name, challenge, otherChallenge } = req.body;
 
                 // Validate input
