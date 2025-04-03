@@ -1,30 +1,8 @@
 {
-    "version": 2,
-    "functions": {
-        "api/**/*.js": {
-            "memory": 1024,
-            "maxDuration": 10
-        }
-    },
-    "routes": [
-        {
-            "src": "/api/payment/initialize",
-            "methods": ["POST", "OPTIONS"],
-            "headers": {
-                "Access-Control-Allow-Origin": "https://consultation-oy4p.vercel.app",
-                "Access-Control-Allow-Methods": "POST, OPTIONS",
-                "Access-Control-Allow-Headers": "Content-Type, Authorization",
-                "Access-Control-Allow-Credentials": "true"
-            }
-        },
-        {
-            "src": "/api/test",
-            "methods": ["GET"],
-            "headers": {
-                "Access-Control-Allow-Origin": "https://consultation-oy4p.vercel.app",
-                "Access-Control-Allow-Methods": "GET",
-                "Access-Control-Allow-Headers": "Content-Type"
-            }
-        }
-    ]
+  "version": 2,
+  "buildCommand": "next build",
+  "devCommand": "next dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "regions": ["lhr1"]
 }
