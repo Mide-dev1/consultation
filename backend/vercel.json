@@ -2,28 +2,14 @@
     "version": 2,
     "builds": [
         {
-            "src": "server.js",
+            "src": "api/index.js",
             "use": "@vercel/node"
         }
     ],
     "routes": [
         {
-            "src": "/api/payment/initialize",
-            "methods": ["OPTIONS", "POST"],
-            "headers": {
-                "Access-Control-Allow-Origin": "https://consultation-oy4p.vercel.app",
-                "Access-Control-Allow-Methods": "POST, OPTIONS",
-                "Access-Control-Allow-Headers": "Content-Type, Authorization, Accept, Origin",
-                "Access-Control-Allow-Credentials": "true",
-                "Access-Control-Max-Age": "86400"
-            }
-        },
-        {
-            "src": "/(.*)",
-            "dest": "server.js"
+            "src": "/api/(.*)",
+            "dest": "/api/index.js"
         }
-    ],
-    "env": {
-        "NODE_ENV": "production"
-    }
+    ]
 }
