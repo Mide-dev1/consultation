@@ -95,22 +95,22 @@ body {
 
 /* Animation Keyframes */
 @keyframes slideInLeft {
-    0% {
+    from {
         transform: translateX(-100%);
         opacity: 0;
     }
-    100% {
+    to {
         transform: translateX(0);
         opacity: 1;
     }
 }
 
 @keyframes slideInRight {
-    0% {
+    from {
         transform: translateX(100%);
         opacity: 0;
     }
-    100% {
+    to {
         transform: translateX(0);
         opacity: 1;
     }
@@ -146,6 +146,19 @@ body {
 
 .intro p.slide-in-right {
     animation: slideInRight 1s ease-out forwards;
+}
+
+/* Animation classes */
+.slide-in-left {
+    animation: slideInLeft 1s ease forwards;
+}
+
+.slide-in-right {
+    animation: slideInRight 1s ease forwards;
+}
+
+.fade-up {
+    animation: fadeUp 1s ease forwards;
 }
 
 /* Consultation Section */
@@ -234,11 +247,11 @@ body {
 /* Testimonials Section */
 /* Animation Keyframes */
 @keyframes fadeUp {
-    0% {
+    from {
         transform: translateY(50px);
         opacity: 0;
     }
-    100% {
+    to {
         transform: translateY(0);
         opacity: 1;
     }
