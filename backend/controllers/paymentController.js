@@ -2,26 +2,49 @@ const https = require('https');
 
 exports.initializePayment = async (req, res) => {
     try {
-         console.log('Payment initialization request received:', req.body);
-        const { email, amount, name, challenge, otherChallenge } = req.body;
+        // Log the entire request body
+        console.log('Raw request body:', req.body);
+        console.log('Content-Type:', req.headers['content-type']);
 
-                // Validate input
-        if (!email || !amount || !name || !challenge || !otherChallenge) {
+        // Validate required fields
+        const { email, amount, name, challenge } = req.body;
+
+        // Log each field for debugging
+        console.log('Extracted fields:', {
+            email: email,
+            amount: amount,
+            name: name,
+            challenge: challenge
+        });
+
+        // Log field types
+        console.log('Field types:', {
+            email: typeof email,
+            amount: typeof amount,
+            name: typeof name,
+            challenge: typeof challenge
+        });
+
+        // Detailed validation
+        const validationErrors = {
+            email: !email ? 'Email is required' : null,
+            amount: !amount ? 'Amount is required' : null,
+            name: !name ? 'Name is required' : null,
+            challenge: !challenge ? 'Challenge is required' : null
+        };
+
+        const hasErrors = Object.values(validationErrors).some(error => error !== null);
+
+        if (hasErrors) {
+            console.log('Validation errors:', validationErrors);
             return res.status(400).json({
                 success: false,
                 message: 'Missing required fields',
-                 details: {
-                    email: !email ? 'Email is required' : null,
-                    amount: !amount ? 'Amount is required' : null,
-                    name: !name ? 'Name is required' : null,
-                    challenge: !challenge ? 'Challenge is required' : null
-                }
+                details: validationErrors
             });
         }
 
-        console.log('Received payment request:', { email, amount, name, challenge, otherChallenge });
-
-         // Validate email format
+        // Validate email format
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             return res.status(400).json({
@@ -30,34 +53,41 @@ exports.initializePayment = async (req, res) => {
             });
         }
 
-        // Validate amount
-        if (typeof amount !== 'number' || amount <= 0) {
+        // Convert amount to kobo (smallest currency unit)
+        const amountInKobo = Math.round(parseFloat(amount) * 100);
+
+        if (isNaN(amountInKobo) || amountInKobo <= 0) {
             return res.status(400).json({
                 success: false,
                 message: 'Invalid amount'
             });
         }
 
-        // Convert amount to kobo (smallest currency unit)
-        const amountInKobo = Math.round(amount * 100);
-
         const params = JSON.stringify({
             email: email,
             amount: amountInKobo,
-            callback_url: `${process.env.FRONTEND_URL}/frontend/receipt.html?` +
+            callback_url: `${process.env.FRONTEND_URL}/receipt.html?` +
                 `name=${encodeURIComponent(name)}&` +
                 `email=${encodeURIComponent(email)}&` +
                 `service=${encodeURIComponent(challenge)}&` +
                 `amount=${amountInKobo}`,
             metadata: {
                 name: name,
-                email: email,
                 challenge: challenge
             }
         });
 
-         console.log('Paystack request params:', params); // Debug log
-        
+        console.log('Paystack request params:', params);
+
+        // Check if PAYSTACK_SECRET_KEY is set
+        if (!process.env.PAYSTACK_SECRET_KEY) {
+            console.error('PAYSTACK_SECRET_KEY is not set');
+            return res.status(500).json({
+                success: false,
+                message: 'Payment service configuration error'
+            });
+        }
+
         const options = {
             hostname: 'api.paystack.co',
             port: 443,
@@ -80,6 +110,7 @@ exports.initializePayment = async (req, res) => {
                 try {
                     const response = JSON.parse(data);
                     console.log('Paystack response:', response);
+
                     if (response.status) {
                         res.json({
                             success: true,
@@ -112,13 +143,16 @@ exports.initializePayment = async (req, res) => {
 
         paymentReq.write(params);
         paymentReq.end();
+
     } catch (error) {
         console.error('Payment initialization error:', error);
         res.status(500).json({
             success: false,
-            message: 'Internal server error'
+            message: 'Internal server error',
+            error: process.env.NODE_ENV === 'development' ? error.message : undefined
         });
     }
+};
 };
 
 // In your paymentController.js
