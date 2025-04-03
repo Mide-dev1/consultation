@@ -58,10 +58,12 @@ document.addEventListener('DOMContentLoaded', function() {
             
                 // First, check if the server is accessible
                 const checkResponse = await fetch('https://consultation-phi.vercel.app/api/payment/initialize', {
-                    method: 'OPTIONS',
+                    method: 'POST',
                     headers: {
-                        'Origin': 'https://consultation-oy4p.vercel.app'
-                    }
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
                 });
             
                 if (!checkResponse.ok) {
