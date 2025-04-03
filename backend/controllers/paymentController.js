@@ -9,11 +9,34 @@ exports.initializePayment = async (req, res) => {
         if (!email || !amount || !name || !challenge || !otherChallenge) {
             return res.status(400).json({
                 success: false,
-                message: 'Missing required fields'
+                message: 'Missing required fields',
+                 details: {
+                    email: !email ? 'Email is required' : null,
+                    amount: !amount ? 'Amount is required' : null,
+                    name: !name ? 'Name is required' : null,
+                    challenge: !challenge ? 'Challenge is required' : null
+                }
             });
         }
 
         console.log('Received payment request:', { email, amount, name, challenge, otherChallenge });
+
+         // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid email format'
+            });
+        }
+
+        // Validate amount
+        if (typeof amount !== 'number' || amount <= 0) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid amount'
+            });
+        }
 
         // Convert amount to kobo (smallest currency unit)
         const amountInKobo = Math.round(amount * 100);
@@ -32,6 +55,8 @@ exports.initializePayment = async (req, res) => {
                 challenge: challenge
             }
         });
+
+         console.log('Paystack request params:', params); // Debug log
         
         const options = {
             hostname: 'api.paystack.co',
