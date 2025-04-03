@@ -62,7 +62,7 @@
                         <label for="email">Email:</label>
                         <input type="email" id="email" name="email" required>
                     </div>
-                    <button type="submit" class="cta-button">Proceed to Payment</button>
+                    <button type="submit" id="submitButton" class="cta-button" onclick="handleSubmit(event)">Proceed to Payment</button>
                 </form>
             </div>
         </div>
@@ -137,6 +137,15 @@
         </div>
     </footer>
 
-    <script src="js/script.js"></script>
+    <script src="js/script.js">
+          // Debug logs
+    console.log('Backend URL:', 'https://consultation-phi.vercel.app/');
+    
+    // Test backend connection
+    fetch('https://consultation-phi.vercel.app/')
+        .then(response => response.json())
+        .then(data => console.log('Backend test:', data))
+        .catch(error => console.error('Backend test failed:', error));
+    </script>
 </body>
 </html>
