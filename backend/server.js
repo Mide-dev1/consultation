@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const paymentRoutes = require('./routes/paymentRoutes');
 require('dotenv').config();
 
 const app = express();
@@ -12,8 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 // Simple CORS setup
 app.use(cors({
     origin: 'https://consultation-oy4p.vercel.app',
-    methods: ['GET', 'POST', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    methods: ['POST', 'OPTIONS'],
     credentials: true
 }));
 
@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
 });
 
 // Payment routes
-const paymentRoutes = require('./routes/paymentRoutes');
+
 app.use('/api/payment', paymentRoutes);
 
 // Error handling middleware
