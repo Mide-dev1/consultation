@@ -8,8 +8,10 @@ const app = express();
 
 // Configure CORS
 app.use(cors({
-    origin: ['https://consultation-oy4p.vercel.app/', 'http://localhost:5500'],    // Frontend URL
-    credentials: true
+    origin: ['https://consultation-oy4p.vercel.app', 'http://localhost:5500'], // Frontend URL
+    methods: ['GET', 'POST', 'OPTIONS'],
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
 }));
 
 // Add this before your routes
@@ -49,10 +51,16 @@ app.listen(PORT, () => {
     console.log(`Backend server running on port ${PORT}`);
 });
 
-// Add to your server.js
-   app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'https://spiritualconsultation.netlify.app/');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+// Add these headers to ensure CORS works
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'https://consultation-oy4p.vercel.app');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Accept');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    
+    // Handle OPTIONS method
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(200);
+    }
     next();
-  });
+});
