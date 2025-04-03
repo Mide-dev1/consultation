@@ -11,31 +11,28 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Configure CORS
-app.use(cors({
-    origin: ['https://consultation-oy4p.vercel.app', 'http://localhost:5500'],
-    methods: ['GET', 'HEAD', 'PUT', 'PATCH' 'POST', 'DELETE', 'OPTIONS'],
-    credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With'],
-    optionsSuccessStatus: 200
-}));
+const allowedOrigins = ['https://consultation-oy4p.vercel.app'];
 
-app.use(cors(corsOptions));
-
-// Additional CORS headers
 app.use((req, res, next) => {
     const origin = req.headers.origin;
-    if (corsOptions.origin.includes(origin)) {
+    if (allowedOrigins.includes(origin)) {
         res.setHeader('Access-Control-Allow-Origin', origin);
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, Accept, Origin');
+        res.setHeader('Access-Control-Allow-Credentials', 'true');
+        res.setHeader('Access-Control-Max-Age', '86400'); // 24 hours
     }
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Accept, Origin, X-Requested-With');
-    res.header('Access-Control-Allow-Credentials', 'true');
-    
+
+    // Handle preflight
     if (req.method === 'OPTIONS') {
-        return res.sendStatus(200).end();
+        res.status(200).end();
+        return;
     }
+
     next();
 });
+
+app.use(cors(corsOptions));
 
 // Static files
 if (process.env.NODE_ENV === 'production') {
