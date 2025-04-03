@@ -26,43 +26,48 @@ document.addEventListener('DOMContentLoaded', function() {
         submitButton.disabled = true;
         submitButton.innerHTML = '<span class="spinner"></span> Processing...';
 
-         // Get the selected challenge
-        const selectedChallenge = document.getElementById('challenge').value;
-        const challengeText = selectedChallenge === 'other' 
-            ? document.getElementById('otherChallenge').value 
-            : selectedChallenge;
-
-        const formData = {
-            email: document.getElementById('email').value,
-            amount: 15000, // Amount in USD
-            name: document.getElementById('name').value,
-            challenge: challengeText, // Pass the actual challenge text
-            metadata: {
-                service: challengeText // Include in metadata for Paystack display
-            }
-        };
-
-
         try {
+            // Get form values
+            const email = document.getElementById('email').value;
+            const name = document.getElementById('name').value;
+            const selectedChallenge = challengeSelect.value;
+            const challengeText = selectedChallenge === 'other' && otherChallengeInput 
+                ? otherChallengeInput.value 
+                : selectedChallenge;
+
+            // Validate form data
+            if (!email || !name || !challengeText) {
+                throw new Error('Please fill in all required fields');
+            }
+
+            const formData = {
+                email: email,
+                amount: 15000, // Amount in Naira
+                name: name,
+                challenge: challengeText
+            };
+
+            console.log('Sending payment data:', formData); // Debug log
+
             const response = await fetch('https://consultation-phi.vercel.app/api/payment/initialize', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 },
                 body: JSON.stringify(formData)
             });
 
-             console.log('Response status:', response.status); // Add this for debugging
+            console.log('Response status:', response.status); // Debug log
+
+            const responseData = await response.json();
+            console.log('Response data:', responseData); // Debug log
 
             if (!response.ok) {
-                // const errorData = await response.json();
-                throw new Error(errorData.message || 'Network response was not ok');
+                throw new Error(responseData.message || 'Payment initialization failed');
             }
 
-            const data = await response.json();
-            console.log('Response data:', data); // Add this for debugging
-            
-            if (data.success) {
+            if (responseData.success && responseData.authorization_url) {
                 // Store form data in localStorage for receipt generation
                 localStorage.setItem('paymentData', JSON.stringify({
                     name: formData.name,
@@ -73,11 +78,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Redirect to Paystack
                 window.location.href = responseData.authorization_url;
             } else {
-                throw new Error(data.message || 'Payment initialization failed');
+                throw new Error(responseData.message || 'Invalid payment response');
             }
         } catch (error) {
             console.error('Payment initialization failed:', error);
-            alert('Payment initialization failed. Please try again.');
+            alert(error.message || 'Payment initialization failed. Please try again.');
+        } finally {
+            // Reset button state
             submitButton.disabled = false;
             submitButton.textContent = 'Proceed to Payment';
         }
