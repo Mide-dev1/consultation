@@ -1,0 +1,17 @@
+{
+    "name": "spiritual-consultancy-frontend",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "start": "serve",
+        "vercel-build": "echo 'No build required'"
+    },
+    "dependencies": {
+        "serve": "^14.0.0"
+    },
+    "main": "index.js",
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": ""
+}
