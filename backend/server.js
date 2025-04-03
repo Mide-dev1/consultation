@@ -13,20 +13,26 @@ app.use(express.urlencoded({ extended: true }));
 // Configure CORS
 app.use(cors({
     origin: ['https://consultation-oy4p.vercel.app', 'http://localhost:5500'],
-    methods: ['GET', 'POST', 'OPTIONS'],
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH' 'POST', 'DELETE', 'OPTIONS'],
     credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With'],
+    optionsSuccessStatus: 200
 }));
+
+app.use(cors(corsOptions));
 
 // Additional CORS headers
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'https://consultation-oy4p.vercel.app');
+    const origin = req.headers.origin;
+    if (corsOptions.origin.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Accept');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Accept, Origin, X-Requested-With');
     res.header('Access-Control-Allow-Credentials', 'true');
     
     if (req.method === 'OPTIONS') {
-        return res.sendStatus(200);
+        return res.sendStatus(200).end();
     }
     next();
 });
@@ -36,13 +42,13 @@ if (process.env.NODE_ENV === 'production') {
     app.use(express.static('public'));
 }
 
-// Routes
-app.use('/api/payment', require('./routes/paymentRoutes'));
-
 // Basic route to test if server is running
 app.get('/', (req, res) => {
     res.json({ message: 'Server is running' });
 });
+
+// Payment routes
+app.use('/api/payment', paymentRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
